@@ -18,9 +18,9 @@ def main():
         time.sleep(10)
 
         # uncomment this to listen on socket
-        #print('Listening on socket')
-        #s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        #s.recvfrom(1024)
+        print('Listening on socket')
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.recvfrom(1024)
 
 if __name__ == "__main__":
     main()
