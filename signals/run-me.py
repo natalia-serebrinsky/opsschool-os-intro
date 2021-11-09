@@ -10,7 +10,6 @@ import uuid
 def before_exit():
     print('Program exiting normally')
 
-
 def signal_handler(signum, frame):
     handler_id = str(uuid.uuid4()) # a unique id for this handler instance
     print('[{}] Caught signal : {}, at line: {}'.format(handler_id, signum, frame.f_lineno))
@@ -27,15 +26,11 @@ def signal_handler_hup(signum, frame):
     time.sleep(1) # this is so you have time to send another signal before the handler finishes
     print('Signal handler hup({}) done'.format(signum))
 
-def signal_handler_kill(signum, frame):
-    print('Caught signal kill : {}, at line: {}'.format(signum, frame.f_lineno))
-    time.sleep(1) # this is so you have time to send another signal before the handler finishes
-    print('Signal handler kill({}) done'.format(signum))
-
 def sig_handler_usr1(signum, frame):
-    print('Caught signal usr1 : {}, at line: {}'.format(signum, frame.f_lineno))
-    time.sleep(1) # this is so you have time to send another signal before the handler finishes
-    print('Signal handler usr1({}) done'.format(signum)) 
+    print("lala")
+
+def sig_handler_usr2(signum, frame):
+    print("lele")
 
 def main():
     atexit.register(before_exit)
@@ -51,8 +46,13 @@ def main():
     
     signal.signal(signal.SIGQUIT, signal_handler_quit)
     signal.signal(signal.SIGHUP, signal_handler_hup)
-    signal.signal(signal.SIGKILL, signal_handler_kill)
+
+    #signal.signal(signal.SIGKILL, signal_handler_kill) 
+    #SIGKILL crashes the process 
+
     signal.signal(signal.SIGUSR1, sig_handler_usr1)
+    signal.signal(signal.SIGUSR2, sig_handler_usr2)
+
 
     print('PID: {}'.format(os.getpid()))
     while True:
